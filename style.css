@@ -1,0 +1,473 @@
+/* =========================================================
+   RESET DASAR
+========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   DESIGN TOKENS — ubah di sini untuk ganti warna/font global
+========================================================= */
+:root {
+  /* warna */
+  --color-peach: #ffe3d1;
+  --color-pink: #ffd2dc;
+  --color-orange: #ffb199;
+  --color-card: #fffaf5;
+  --color-text: #4a3b3a;
+  --color-text-muted: #a08d8a;
+  --color-accent: #ff8fa3;
+  --color-accent-soft: rgba(255, 143, 163, 0.18);
+  --color-success: #8fbfa1;
+
+  /* tipografi */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Nunito', -apple-system, 'Segoe UI', sans-serif;
+
+  /* bentuk & gerak */
+  --radius-card: 28px;
+  --radius-pill: 999px;
+  --ease: cubic-bezier(0.22, 0.9, 0.4, 1);
+}
+
+/* =========================================================
+   BASE
+========================================================= */
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: linear-gradient(165deg, var(--color-peach) 0%, var(--color-pink) 55%, var(--color-orange) 100%);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.25;
+  margin-bottom: 1.25rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  font-size: 1.02rem;
+}
+
+p:last-of-type {
+  margin-bottom: 0;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+button {
+  font-family: var(--font-body);
+  border: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   SISTEM SCREEN
+   Semua section .screen disembunyikan (display:none) kecuali
+   yang sedang aktif. script.js yang menambah/mengurangi class
+   "active", "is-entering", "is-leaving".
+========================================================= */
+.screen {
+  display: none;
+  min-height: 100svh;
+  width: 100%;
+  padding: 3rem 1.5rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.screen.active {
+  display: flex;
+}
+
+.screen-bright {
+  background: linear-gradient(165deg, #fff3ea 0%, #ffe1e8 60%, #ffd6c9 100%);
+}
+
+.content {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content h1,
+.content h2 {
+  text-align: center;
+}
+
+.content p {
+  text-align: left;
+  width: 100%;
+}
+
+/* animasi masuk/keluar antar screen */
+@keyframes screenEnter {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes screenLeave {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-18px); }
+}
+
+.screen.is-entering {
+  animation: screenEnter 0.45s var(--ease) both;
+}
+
+.screen.is-leaving {
+  animation: screenLeave 0.35s var(--ease) both;
+}
+
+/* =========================================================
+   BUTTON — pill, filled dengan warna aksen
+========================================================= */
+.btn {
+  margin-top: 2rem;
+  padding: 0.9rem 2.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 10px 24px -10px rgba(255, 143, 163, 0.55);
+  transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease), opacity 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* tombol kembali — bulat kecil, pojok kiri atas, tidak mencolok */
+.back-btn {
+  position: fixed;
+  top: calc(1.1rem + env(safe-area-inset-top));
+  left: calc(1.1rem + env(safe-area-inset-left));
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--color-text);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.back-btn:active {
+  transform: scale(0.92);
+}
+
+.back-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* =========================================================
+   SCREEN 1 — OPENING
+========================================================= */
+#screen-opening h1 {
+  font-size: clamp(2rem, 8vw, 2.6rem);
+}
+
+/* muncul bertahap saat halaman pertama kali dibuka */
+.fade-up {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fadeUp 0.6s var(--ease) forwards;
+}
+
+.delay-1 { animation-delay: 0.35s; }
+.delay-2 { animation-delay: 0.7s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   SCREEN 2 — SECRET PIN
+========================================================= */
+#screen-pin h2 {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+}
+
+.pin-dots {
+  display: flex;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent-soft);
+  background: transparent;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.dot.filled {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.pin-dots.success .dot {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  transform: scale(1.15);
+}
+
+.pin-dots.shake {
+  animation: shake 0.45s var(--ease);
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-8px); }
+  20%, 80% { transform: translateX(7px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
+.pin-status {
+  min-height: 1.4em;
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+.pin-status.error {
+  color: #d97878;
+}
+
+.pin-status.success {
+  color: var(--color-success);
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem;
+  width: 100%;
+  max-width: 280px;
+}
+
+.key {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--color-text);
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.key:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.key-spacer {
+  background: transparent;
+  pointer-events: none;
+}
+
+.key-clear {
+  border-radius: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.key:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* =========================================================
+   SCREEN 3 — LETTER
+========================================================= */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  padding: 2.25rem 1.75rem;
+  box-shadow: 0 24px 50px -20px rgba(180, 100, 90, 0.25);
+  text-align: left;
+  width: 100%;
+}
+
+.card-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  margin-bottom: 1.25rem;
+}
+
+.letter-text p {
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+/* =========================================================
+   SCREEN 4 — WHAT I REALIZED
+========================================================= */
+.realize-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  margin-bottom: 1.75rem;
+}
+
+.realize-card {
+  background: var(--color-card);
+  border-radius: 18px;
+  padding: 1rem 1.3rem;
+  font-size: 0.98rem;
+  box-shadow: 0 14px 28px -18px rgba(180, 100, 90, 0.3);
+  text-align: left;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.5s var(--ease) forwards;
+}
+
+.realize-card:nth-child(1) { animation-delay: 0.1s; }
+.realize-card:nth-child(2) { animation-delay: 0.28s; }
+.realize-card:nth-child(3) { animation-delay: 0.46s; }
+.realize-card:nth-child(4) { animation-delay: 0.64s; }
+
+/* =========================================================
+   SCREEN 5 — APOLOGY
+========================================================= */
+.big-text {
+  font-size: clamp(2.4rem, 12vw, 3.2rem);
+}
+
+/* =========================================================
+   SCREEN 7 — FINAL MESSAGE
+========================================================= */
+.final-lines p {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.6s var(--ease) forwards;
+}
+
+.final-lines p:nth-child(1) { animation-delay: 0.15s; }
+.final-lines p:nth-child(2) { animation-delay: 0.65s; }
+.final-lines p:nth-child(3) { animation-delay: 1.15s; }
+.final-lines p.take-care { animation-delay: 1.75s; }
+
+.take-care {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-accent);
+  margin-top: 0.5rem;
+}
+
+/* =========================================================
+   SCREEN 8 — ENDING
+========================================================= */
+.sparkle-wrap {
+  position: relative;
+  height: 48px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  opacity: 0;
+  animation: sparkleFloat 2.6s var(--ease) infinite;
+}
+
+.sparkle:nth-child(1) { left: 30%; top: 10px; animation-delay: 0s; }
+.sparkle:nth-child(2) { left: 48%; top: 0; animation-delay: 0.5s; font-size: 0.9rem; }
+.sparkle:nth-child(3) { left: 65%; top: 14px; animation-delay: 1s; }
+.sparkle:nth-child(4) { left: 42%; top: 22px; animation-delay: 1.5s; font-size: 0.85rem; }
+
+@keyframes sparkleFloat {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.85); }
+  40%  { opacity: 1; transform: translateY(-4px) scale(1); }
+  100% { opacity: 0; transform: translateY(-14px) scale(0.9); }
+}
+
+.ending-line {
+  text-align: center;
+  font-size: 1.05rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.6s var(--ease) forwards;
+}
+
+.ending-line:nth-child(2) { animation-delay: 0.4s; }
+.ending-line:nth-child(3) { animation-delay: 0.9s; }
+.ending-line:nth-child(4) { animation-delay: 1.4s; }
+
+/* =========================================================
+   RESPONSIVE — layar lebih lebar (tablet/desktop)
+========================================================= */
+@media (min-width: 640px) {
+  .content {
+    max-width: 460px;
+  }
+
+  .card {
+    padding: 3rem 2.5rem;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY — hormati preferensi "reduced motion"
+========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

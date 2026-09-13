@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>untuk kamu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =========================================================
+       Setiap <section class="screen"> di bawah ini adalah satu
+       "halaman". Hanya satu yang tampil di layar setiap saat —
+       script.js yang mengatur mana yang aktif (tidak ada reload).
+  ========================================================== -->
+
+  <!-- ================= SCREEN 1 — OPENING ================= -->
+  <section id="screen-opening" class="screen active">
+    <div class="content">
+      <h1 class="fade-up">Hi, Vi.</h1>
+      <p class="fade-up delay-1 muted">aku bikin ini karena ada beberapa hal yang mau aku bilang.</p>
+      <button type="button" class="btn fade-up delay-2" data-goto="screen-pin">buka ya</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 2 — SECRET PIN =================
+       PIN yang benar diatur di bagian paling atas script.js
+       (cari variabel SECRET_PIN). Ganti sesuka kamu, 6 digit.
+  ========================================================== -->
+  <section id="screen-pin" class="screen">
+    <div class="content">
+      <h2>Enter Secret PIN</h2>
+
+      <!-- 6 lingkaran indikator, terisi sesuai jumlah digit yang ditekan -->
+      <div class="pin-dots" id="pinDots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <!-- pesan status: "coba lagi." saat salah, "terbuka." saat benar -->
+      <p class="pin-status" id="pinStatus" aria-live="polite"></p>
+
+      <div class="keypad" id="keypad">
+        <button type="button" class="key" data-digit="1">1</button>
+        <button type="button" class="key" data-digit="2">2</button>
+        <button type="button" class="key" data-digit="3">3</button>
+        <button type="button" class="key" data-digit="4">4</button>
+        <button type="button" class="key" data-digit="5">5</button>
+        <button type="button" class="key" data-digit="6">6</button>
+        <button type="button" class="key" data-digit="7">7</button>
+        <button type="button" class="key" data-digit="8">8</button>
+        <button type="button" class="key" data-digit="9">9</button>
+        <span class="key key-spacer" aria-hidden="true"></span>
+        <button type="button" class="key" data-digit="0">0</button>
+        <button type="button" class="key key-clear" id="pinClearBtn">CLEAR</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 3 — LETTER =================
+       Ganti isi surat di bawah ini sesuka kamu — tiap paragraf
+       ada di dalam <p> masing-masing biar gampang diedit.
+  ========================================================== -->
+  <section id="screen-letter" class="screen">
+    <button type="button" class="back-btn" data-goto="screen-pin" aria-label="kembali">←</button>
+    <div class="content">
+      <div class="card">
+        <p class="card-label">Untuk Vivi,</p>
+
+        <div class="letter-text">
+          <p>aku cuma mau bilang sesuatu yang mungkin selama ini belum bisa aku bilang dengan baik.</p>
+          <p>aku sdr ad beberapa hal yang aku lakukan membuat mu kecewa, gak nyaman, atau bahkan sakit hti.</p>
+          <p>aku minta maaf.</p>
+          <p>aku gamau mencari alasan atau ngebela diri. aku cuma mau ngakuin kalua aku banyk salah dan ada banyak hal yang seharusnya bisa aku lakukan dengan lebih baik.</p>
+          <p>aku juga tau kalau cuma bilang maaf gak akan bisa langsung di maafin.</p>
+          <p>aku gak minta mu buat langsung maafin aku. aku cuma pengen mu tau kalau aku dah sadar kesalahanku.</p>
+        </div>
+      </div>
+
+      <button type="button" class="btn" data-goto="screen-realized">lanjut...</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 4 — WHAT I REALIZED ================= -->
+  <section id="screen-realized" class="screen">
+    <button type="button" class="back-btn" data-goto="screen-letter" aria-label="kembali">←</button>
+    <div class="content">
+      <h2>hal yang aku sadari</h2>
+
+      <!-- tiap card muncul satu per satu (urutan diatur lewat CSS) -->
+      <div class="realize-list">
+        <div class="realize-card">aku terlalu oversharing</div>
+        <div class="realize-card">aku ngebuat u keseret masalah yg perlu ada didalamnya</div>
+        <div class="realize-card">aku gabisa diandalin</div>
+        <div class="realize-card">aku gabisa jaga privasi hub</div>
+      </div>
+
+      <p class="muted">mungkin aku baru sadarnya sekarang, tapi aku udh belajar dari semuanya.</p>
+
+      <button type="button" class="btn" data-goto="screen-apology">next</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 5 — APOLOGY ================= -->
+  <section id="screen-apology" class="screen">
+    <button type="button" class="back-btn" data-goto="screen-realized" aria-label="kembali">←</button>
+    <div class="content">
+      <h1 class="big-text">maaf ya.</h1>
+      <p>bukan cuma karena akhirnya jdi kek gini,<br>tapi harusnya ada yg sebenrnya bisa ak lakuin lbih dri pd itu.</p>
+      <p>aku gmau makasa apa pun lgi.</p>
+
+      <button type="button" class="btn" data-goto="screen-nopressure">lanjut</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 6 — NO PRESSURE ================= -->
+  <section id="screen-nopressure" class="screen">
+    <button type="button" class="back-btn" data-goto="screen-apology" aria-label="kembali">←</button>
+    <div class="content">
+      <h2>gada paksaan.</h2>
+
+      <p>aku ga berharap mu langsung maafin aku.</p>
+      <p>aku juga ga berharap semuanya balek kek dulu.</p>
+      <p>kalau mu butuh waktu atau jarak, aku akan hargain.</p>
+      <p>aku cuma mau bilang permintaan maaf ini dengan jujur dan baik.</p>
+
+      <button type="button" class="btn" data-goto="screen-final">aku mengerti</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 7 — FINAL MESSAGE ================= -->
+  <section id="screen-final" class="screen screen-bright">
+    <button type="button" class="back-btn" data-goto="screen-nopressure" aria-label="kembali">←</button>
+    <div class="content">
+      <h2>one last thing.</h2>
+
+      <div class="final-lines">
+        <p>makasih untuk semua hal baik yang pernah ada.</p>
+        <p>Aku bener2 minta maaf atas semua kesalahan yang aku buat.</p>
+        <p>Aku harap habis ini kamu ttp baik2 aja, apa pun pilihanya.</p>
+        <p class="take-care">take care.</p>
+      </div>
+
+      <button type="button" class="btn" id="finishBtn" data-goto="screen-ending">selesai</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 8 — ENDING ================= -->
+  <section id="screen-ending" class="screen screen-bright">
+    <div class="content">
+      <div class="sparkle-wrap" aria-hidden="true">
+        <span class="sparkle">✦</span>
+        <span class="sparkle">♡</span>
+        <span class="sparkle">✦</span>
+        <span class="sparkle">✧</span>
+      </div>
+
+      <p class="ending-line">pesannya sudah sampai.</p>
+      <p class="ending-line muted">nggak perlu membalas sekarang.</p>
+      <p class="ending-line">take care 🤍</p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
